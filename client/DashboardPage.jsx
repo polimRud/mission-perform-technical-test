@@ -9,6 +9,8 @@ const COLUMNS = [
   { key: 'season', label: 'Season' },
   { key: 'rating', label: 'Rating' },
   { key: 'status', label: 'Status' },
+  { key: 'pricePence', label: 'Price' },
+  { key: 'stock', label: 'Stock' },
 ]
 
 const PAGE_SIZE = 25
@@ -31,10 +33,10 @@ export function DashboardPage() {
       .catch(() => setCurrentUser(null))
   }, [])
 
-  useEffect(() => {
+  function reload() {
     setLoading(true)
 
-    fetchListings(search)
+    return fetchListings(search)
       .then((data) => {
         setListings(data.items)
         setTotal(data.total)
@@ -42,6 +44,10 @@ export function DashboardPage() {
       })
       .catch((requestError) => setError(requestError.message))
       .finally(() => setLoading(false))
+  }
+
+  useEffect(() => {
+    reload()
   }, [])
 
   const sortedListings = useMemo(() => {
@@ -120,12 +126,12 @@ export function DashboardPage() {
                 </button>
               </th>
             ))}
-            <th className="numeric">Flag</th>
+            <th>Order</th>
           </tr>
         </thead>
         <tbody>
           {visibleListings.map((listing, index) => (
-            <ListingRow key={index} listing={listing} />
+            <ListingRow key={index} listing={listing} onOrdered={reload} />
           ))}
         </tbody>
       </table>

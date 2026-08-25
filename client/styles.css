@@ -196,3 +196,17 @@ tr.flagged {
   opacity: 0.45;
   cursor: default;
 }
+
+td.order {
+  white-space: nowrap;
+}
+
+td.order input {
+  width: 4.5rem;
+  margin-right: 0.4rem;
+}
+
+.order__message {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+}

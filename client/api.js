@@ -46,3 +46,10 @@ export function fetchCurrentUser() {
 export function fetchListings(search) {
   return request(`/listings?limit=10000&search=${encodeURIComponent(search)}`)
 }
+
+export function placeOrder({ listingId, quantity, unitPricePence }) {
+  return request('/orders', {
+    method: 'POST',
+    body: JSON.stringify({ listingId, quantity, unitPricePence }),
+  })
+}

@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { login, requireAuth } from './auth.js'
 import { Listing } from './models/Listing.js'
+import { Order } from './models/Order.js'
 import { User } from './models/User.js'
 
 export const router = Router()
@@ -34,10 +35,47 @@ router.get('/listings', async (req, res) => {
     Listing.aggregate([
       { $match: filter },
       { $sort: { _id: 1 } },
-      { $project: { _id: 0, id: '$_id', productName: '$productName', category: '$category', season: '$season', rating: '$rating', status: '$status' } },
+      { $project: { _id: 0, id: '$_id', productName: '$productName', category: '$category', season: '$season', rating: '$rating', status: '$status', pricePence: '$pricePence', stock: '$stock' } },
     ]),
     Listing.countDocuments(filter),
   ])
 
   return res.json({ items, total })
+})
+
+router.post('/orders', requireAuth, async (req, res) => {
+  const { listingId, quantity, unitPricePence } = req.body ?? {}
+
+  if (!listingId || !Number.isInteger(quantity) || quantity < 1) {
+    return res.status(400).json({ error: 'A listing and a whole quantity of at least 1 are required.' })
+  }
+
+  const listing = await Listing.findById(listingId)
+
+  if (!listing) {
+    return res.status(404).json({ error: 'No such listing.' })
+  }
+
+  if (listing.stock < quantity) {
+    return res.status(409).json({ error: `Only ${listing.stock} left.` })
+  }
+
+  listing.stock -= quantity
+  await listing.save()
+
+  const order = await Order.create({
+    listingId,
+    merchandiserId: req.auth.sub,
+    quantity,
+    unitPricePence,
+    placedAt: new Date(),
+  })
+
+  return res.status(201).json({
+    id: order.id,
+    listingId,
+    quantity,
+    unitPricePence,
+    remainingStock: listing.stock,
+  })
 })

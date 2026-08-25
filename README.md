@@ -1,7 +1,10 @@
 # Catalogue Dashboard — Bug Hunt
 
 A small MERN-style app: a login page, and a dashboard listing product catalogue
-entries. An in-memory MongoDB (`mongodb-memory-server`) starts with the app and
+entries. Each entry carries a price and a stock level, and you can order a
+quantity of one straight from its row.
+
+An in-memory MongoDB (`mongodb-memory-server`) starts with the app and
 is seeded once at startup from `server/data/listings.json`. Nothing is written
 to disk, and the database is rebuilt from the fixture on every boot.
 
@@ -30,7 +33,7 @@ That starts the API on <http://localhost:4000> and the app on
 
 ## Your task
 
-This app has **4 known defects**, spread across `client/` and `server/`.
+This app has **6 known defects**, spread across `client/` and `server/`.
 
 For each one you find, tell us:
 
@@ -54,7 +57,7 @@ server/
   auth.js         Login handler and auth middleware
   users.js        Fixture accounts (seed data)
   db.js           In-memory MongoDB startup + seeding
-  models/         Listing and User schemas
+  models/         Listing, User and Order schemas
   data/           listings.json (100 records)
 client/
   main.jsx        Entry point

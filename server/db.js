@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import listings from './data/listings.json' with { type: 'json' }
 import { users } from './users.js'
 import { Listing } from './models/Listing.js'
+import './models/Order.js'
 import { User } from './models/User.js'
 
 let memoryServer
