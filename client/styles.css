@@ -180,3 +180,19 @@ tr.flagged {
   background: #e6f6ec;
   color: #216e3f;
 }
+
+.pager {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.75rem 0 2rem;
+}
+
+.pager .muted {
+  margin: 0;
+}
+
+.pager button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}

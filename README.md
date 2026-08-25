@@ -30,7 +30,7 @@ That starts the API on <http://localhost:4000> and the app on
 
 ## Your task
 
-This app has **5 known defects**, spread across `client/` and `server/`.
+This app has **4 known defects**, spread across `client/` and `server/`.
 
 For each one you find, tell us:
 

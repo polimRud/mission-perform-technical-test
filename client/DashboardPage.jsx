@@ -11,6 +11,8 @@ const COLUMNS = [
   { key: 'status', label: 'Status' },
 ]
 
+const PAGE_SIZE = 25
+
 export function DashboardPage() {
   const navigate = useNavigate()
 
@@ -19,6 +21,7 @@ export function DashboardPage() {
   const [total, setTotal] = useState(0)
   const [search, setSearch] = useState('')
   const [sort, setSort] = useState({ key: 'productName', direction: 'asc' })
+  const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -56,7 +59,16 @@ export function DashboardPage() {
     return copy
   }, [listings, sort])
 
+  const pageCount = Math.max(1, Math.ceil(sortedListings.length / PAGE_SIZE))
+  const currentPage = Math.min(page, pageCount)
+
+  const visibleListings = useMemo(
+    () => sortedListings.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE),
+    [sortedListings, currentPage],
+  )
+
   function toggleSort(key) {
+    setPage(1)
     setSort((current) =>
       current.key === key
         ? { key, direction: current.direction === 'asc' ? 'desc' : 'asc' }
@@ -112,7 +124,7 @@ export function DashboardPage() {
           </tr>
         </thead>
         <tbody>
-          {sortedListings.map((listing, index) => (
+          {visibleListings.map((listing, index) => (
             <ListingRow key={index} listing={listing} />
           ))}
         </tbody>
@@ -120,6 +132,24 @@ export function DashboardPage() {
 
       {!loading && sortedListings.length === 0 ? (
         <p className="muted">No listings match that search.</p>
+      ) : null}
+
+      {sortedListings.length > 0 ? (
+        <div className="pager">
+          <button type="button" onClick={() => setPage(currentPage - 1)} disabled={currentPage <= 1}>
+            Previous
+          </button>
+          <span className="muted">
+            Page {currentPage} of {pageCount}
+          </span>
+          <button
+            type="button"
+            onClick={() => setPage(currentPage + 1)}
+            disabled={currentPage >= pageCount}
+          >
+            Next
+          </button>
+        </div>
       ) : null}
     </div>
   )
