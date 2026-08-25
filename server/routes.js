@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import reviews from './data/reviews.json' with { type: 'json' }
+import listings from './data/listings.json' with { type: 'json' }
 import { login, requireAuth } from './auth.js'
 import { findUserById } from './users.js'
 
@@ -24,18 +24,18 @@ router.get('/me', requireAuth, (req, res) => {
   return res.json({ id: user.id, name: user.name, email: user.email })
 })
 
-router.get('/reviews', (req, res) => {
+router.get('/listings', (req, res) => {
   const page = toPositiveInt(req.query.page, 1)
   const limit = toPositiveInt(req.query.limit, DEFAULT_LIMIT)
   const search = String(req.query.search ?? '').trim().toLowerCase()
 
   const matched = search
-    ? reviews.filter(
-        (review) =>
-          review.employeeName.toLowerCase().includes(search) ||
-          review.department.toLowerCase().includes(search),
+    ? listings.filter(
+        (listing) =>
+          listing.productName.toLowerCase().includes(search) ||
+          listing.category.toLowerCase().includes(search),
       )
-    : reviews
+    : listings
 
   const start = (page - 1) * limit
 

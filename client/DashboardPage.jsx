@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { clearToken, fetchCurrentUser, fetchReviews } from './api.js'
-import { ReviewRow } from './ReviewRow.jsx'
+import { clearToken, fetchCurrentUser, fetchListings } from './api.js'
+import { ListingRow } from './ListingRow.jsx'
 
 const COLUMNS = [
-  { key: 'employeeName', label: 'Employee' },
-  { key: 'department', label: 'Department' },
-  { key: 'reviewCycle', label: 'Cycle' },
-  { key: 'score', label: 'Score' },
+  { key: 'productName', label: 'Product' },
+  { key: 'category', label: 'Category' },
+  { key: 'season', label: 'Season' },
+  { key: 'rating', label: 'Rating' },
   { key: 'status', label: 'Status' },
 ]
 
@@ -15,10 +15,10 @@ export function DashboardPage() {
   const navigate = useNavigate()
 
   const [currentUser, setCurrentUser] = useState(null)
-  const [reviews, setReviews] = useState([])
+  const [listings, setListings] = useState([])
   const [total, setTotal] = useState(0)
   const [search, setSearch] = useState('')
-  const [sort, setSort] = useState({ key: 'employeeName', direction: 'asc' })
+  const [sort, setSort] = useState({ key: 'productName', direction: 'asc' })
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -31,9 +31,9 @@ export function DashboardPage() {
   useEffect(() => {
     setLoading(true)
 
-    fetchReviews(search)
+    fetchListings(search)
       .then((data) => {
-        setReviews(data.items)
+        setListings(data.items)
         setTotal(data.total)
         setError(null)
       })
@@ -41,8 +41,8 @@ export function DashboardPage() {
       .finally(() => setLoading(false))
   }, [])
 
-  const sortedReviews = useMemo(() => {
-    const copy = [...reviews]
+  const sortedListings = useMemo(() => {
+    const copy = [...listings]
 
     copy.sort((a, b) => {
       const left = a[sort.key]
@@ -54,7 +54,7 @@ export function DashboardPage() {
     })
 
     return copy
-  }, [reviews, sort])
+  }, [listings, sort])
 
   function toggleSort(key) {
     setSort((current) =>
@@ -73,9 +73,9 @@ export function DashboardPage() {
     <div className="page">
       <header className="topbar">
         <div>
-          <h1>Performance reviews</h1>
+          <h1>Product catalogue</h1>
           <p className="muted">
-            {loading ? 'Loading…' : `${total.toLocaleString()} reviews`}
+            {loading ? 'Loading…' : `${total.toLocaleString()} listings`}
           </p>
         </div>
         <div className="topbar__right">
@@ -90,7 +90,7 @@ export function DashboardPage() {
         <input
           type="search"
           value={search}
-          placeholder="Search employee or department…"
+          placeholder="Search product or category…"
           onChange={(event) => setSearch(event.target.value)}
         />
       </div>
@@ -112,14 +112,14 @@ export function DashboardPage() {
           </tr>
         </thead>
         <tbody>
-          {sortedReviews.map((review, index) => (
-            <ReviewRow key={index} review={review} />
+          {sortedListings.map((listing, index) => (
+            <ListingRow key={index} listing={listing} />
           ))}
         </tbody>
       </table>
 
-      {!loading && sortedReviews.length === 0 ? (
-        <p className="muted">No reviews match that search.</p>
+      {!loading && sortedListings.length === 0 ? (
+        <p className="muted">No listings match that search.</p>
       ) : null}
     </div>
   )

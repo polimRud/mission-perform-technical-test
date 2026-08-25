@@ -30,7 +30,7 @@ export function LoginPage() {
     <div className="centred">
       <form className="card" onSubmit={handleSubmit}>
         <h1>Mission Perform</h1>
-        <p className="muted">Sign in to review your team.</p>
+        <p className="muted">Sign in to manage the catalogue.</p>
 
         <label>
           Email

@@ -43,6 +43,6 @@ export function fetchCurrentUser() {
   return request('/me')
 }
 
-export function fetchReviews(search) {
-  return request(`/reviews?limit=10000&search=${encodeURIComponent(search)}`)
+export function fetchListings(search) {
+  return request(`/listings?limit=10000&search=${encodeURIComponent(search)}`)
 }

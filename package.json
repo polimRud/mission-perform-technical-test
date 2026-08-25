@@ -1,9 +1,9 @@
 {
-  "name": "review-dashboard",
+  "name": "catalogue-dashboard",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Performance review dashboard",
+  "description": "Product catalogue dashboard",
   "scripts": {
     "dev": "concurrently -n server,client -c blue,magenta \"npm:dev:server\" \"npm:dev:client\"",
     "dev:server": "node --watch server/index.js",

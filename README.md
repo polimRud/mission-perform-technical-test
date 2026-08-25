@@ -1,8 +1,8 @@
-# Review Dashboard — Bug Hunt
+# Catalogue Dashboard — Bug Hunt
 
-A small MERN-style app: a login page, and a dashboard listing employee
-performance reviews. There is no database — the reviews live in
-`server/data/reviews.json` and are loaded at startup.
+A small MERN-style app: a login page, and a dashboard listing product catalogue
+entries. There is no database — the listings live in
+`server/data/listings.json` and are loaded at startup.
 
 ## Running it
 
@@ -46,13 +46,13 @@ server/
   routes.js       API routes
   auth.js         Login handler and auth middleware
   users.js        Fixture accounts
-  data/           reviews.json (10,000 records)
+  data/           listings.json (10,000 records)
 client/
   main.jsx        Entry point
   App.jsx         Routes
   LoginPage.jsx   Login form
-  DashboardPage.jsx  Review table
-  ReviewRow.jsx   A single table row
+  DashboardPage.jsx  Listing table
+  ListingRow.jsx  A single table row
   ProtectedRoute.jsx Route guard
   api.js          fetch wrapper
 ```
