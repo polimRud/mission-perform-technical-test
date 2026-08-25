@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { findUserByEmail } from './users.js'
+import { User } from './models/User.js'
 
 const SECRET = process.env.JWT_SECRET ?? 'dev-only-secret'
 const TOKEN_TTL = '1h'
@@ -12,7 +12,7 @@ export async function login(req, res) {
     return res.status(400).json({ error: 'Email and password are required.' })
   }
 
-  const user = findUserByEmail(email)
+  const user = await User.findOne({ email: String(email).trim().toLowerCase() })
   const hash = user?.passwordHash
 
   // Compare against a dummy hash when the user is unknown so that a missing

@@ -1,8 +1,9 @@
 # Catalogue Dashboard — Bug Hunt
 
 A small MERN-style app: a login page, and a dashboard listing product catalogue
-entries. There is no database — the listings live in
-`server/data/listings.json` and are loaded at startup.
+entries. An in-memory MongoDB (`mongodb-memory-server`) starts with the app and
+is seeded once at startup from `server/data/listings.json`. Nothing is written
+to disk, and the database is rebuilt from the fixture on every boot.
 
 ## Running it
 
@@ -13,6 +14,12 @@ npm run dev
 
 That starts the API on <http://localhost:4000> and the app on
 <http://localhost:5173>. Open the app in your browser.
+
+> **Run this once before your session.** The first `npm run dev` downloads a
+> MongoDB binary (~120 MB) before the API can start, so it takes noticeably
+> longer than later runs. Wait for `API listening on http://localhost:4000` in
+> the terminal before loading the page — the dashboard will show an error if you
+> get there first.
 
 ### Dev logins
 
@@ -45,8 +52,10 @@ server/
   index.js        Express app + listener
   routes.js       API routes
   auth.js         Login handler and auth middleware
-  users.js        Fixture accounts
-  data/           listings.json (10,000 records)
+  users.js        Fixture accounts (seed data)
+  db.js           In-memory MongoDB startup + seeding
+  models/         Listing and User schemas
+  data/           listings.json (100 records)
 client/
   main.jsx        Entry point
   App.jsx         Routes
