@@ -24,6 +24,10 @@ That starts the API on <http://localhost:4000> and the app on
 > the terminal before loading the page — the dashboard will show an error if you
 > get there first.
 
+Ctrl+C stops both cleanly: the API finishes any in-flight request, shuts the
+in-memory database down and releases port 4000. If the port is ever still held
+after you stop the app, an older server is still running.
+
 ### Dev logins
 
 | Email                            | Password     |
