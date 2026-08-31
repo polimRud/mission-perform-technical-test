@@ -62,7 +62,7 @@ server/
   users.js        Fixture accounts (seed data)
   db.js           In-memory MongoDB startup + seeding
   models/         Listing, User and Order schemas
-  data/           listings.json (100 records)
+  data/           listings.json (10,000 records)
 client/
   main.jsx        Entry point
   App.jsx         Routes
