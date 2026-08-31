@@ -56,10 +56,6 @@ router.post('/orders', requireAuth, async (req, res) => {
     return res.status(404).json({ error: 'No such listing.' })
   }
 
-  if (listing.stock < quantity) {
-    return res.status(409).json({ error: `Only ${listing.stock} left.` })
-  }
-
   listing.stock -= quantity
   await listing.save()
 

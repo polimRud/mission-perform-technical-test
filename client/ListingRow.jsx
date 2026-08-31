@@ -12,6 +12,12 @@ export function ListingRow({ listing, onOrdered }) {
   function order() {
     setMessage(null)
 
+    // Don't let a Merchandiser order more than the shelf holds.
+    if (quantity > listing.stock) {
+      setMessage(`Only ${listing.stock} left.`)
+      return
+    }
+
     placeOrder({
       listingId: listing.id,
       quantity,
@@ -39,6 +45,7 @@ export function ListingRow({ listing, onOrdered }) {
         <input
           type="number"
           min="1"
+          max={listing.stock}
           value={quantity}
           aria-label={`Quantity of ${listing.productName} to order`}
           onChange={(event) => setQuantity(Number(event.target.value))}

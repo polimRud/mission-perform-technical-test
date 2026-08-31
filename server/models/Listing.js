@@ -12,7 +12,7 @@ const listingSchema = new mongoose.Schema(
     rating: { type: Number, required: true, min: 1, max: 5 },
     status: { type: String, required: true, enum: ['draft', 'submitted', 'approved'] },
     pricePence: { type: Number, required: true, min: 0 },
-    stock: { type: Number, required: true, min: 0 },
+    stock: { type: Number, required: true },
   },
   { versionKey: false },
 )
