@@ -1,3 +1,9 @@
 node_modules
 dist
 .DS_Store
+
+# Interviewer-only material: kept in the working tree, never committed
+ANSWER-KEY.md
+CONTEXT.md
+docs/
+tools/
