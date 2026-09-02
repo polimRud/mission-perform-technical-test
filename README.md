@@ -37,7 +37,10 @@ after you stop the app, an older server is still running.
 
 ## Your task
 
-This app has **6 known defects**, spread across `client/` and `server/`.
+This app has **8 known defects**, spread across `client/` and `server/`.
+
+Two of them are obvious — you should expect to find those in the first few
+minutes. The other six are not, and nobody is expected to find all of them.
 
 For each one you find, tell us:
 
@@ -49,7 +52,7 @@ For each one you find, tell us:
 talk through the code than watch you type. Use the browser, the terminal, the
 DevTools Network and Performance tabs — whatever you would normally reach for.
 
-If you spot something that isn't on our list of five, say so anyway. We are
+If you spot something that isn't on our list of eight, say so anyway. We are
 interested in how you read unfamiliar code, not in a scavenger hunt.
 
 ## Layout

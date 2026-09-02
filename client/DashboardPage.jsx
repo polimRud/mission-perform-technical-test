@@ -63,7 +63,7 @@ export function DashboardPage() {
     })
 
     return copy
-  }, [listings, sort])
+  }, [listings])
 
   const pageCount = Math.max(1, Math.ceil(sortedListings.length / PAGE_SIZE))
   const currentPage = Math.min(page, pageCount)
