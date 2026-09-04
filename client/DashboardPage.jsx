@@ -15,6 +15,10 @@ const COLUMNS = [
 
 const PAGE_SIZE = 25
 
+// Status is a domain enum with an intrinsic order, so it cannot be compared as
+// the plain string it is stored as.
+const STATUS_ORDER = { draft: 0, submitted: 1, approved: 2 }
+
 export function DashboardPage() {
   const navigate = useNavigate()
 
@@ -56,14 +60,21 @@ export function DashboardPage() {
     copy.sort((a, b) => {
       const left = a[sort.key]
       const right = b[sort.key]
-      const comparison =
-        typeof left === 'number' ? left - right : String(left).localeCompare(String(right))
+      let comparison
+
+      if (sort.key === 'status') {
+        comparison = STATUS_ORDER[left] - STATUS_ORDER[right]
+      } else if (typeof left === 'number') {
+        comparison = left - right
+      } else {
+        comparison = String(left).localeCompare(String(right))
+      }
 
       return sort.direction === 'asc' ? comparison : -comparison
     })
 
     return copy
-  }, [listings])
+  }, [listings, sort])
 
   const pageCount = Math.max(1, Math.ceil(sortedListings.length / PAGE_SIZE))
   const currentPage = Math.min(page, pageCount)
