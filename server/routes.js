@@ -46,9 +46,6 @@ router.get('/listings', async (req, res) => {
 router.post('/orders', requireAuth, async (req, res) => {
   const { listingId, quantity, unitPricePence } = req.body ?? {}
 
-  if (!listingId || !Number.isInteger(quantity) || quantity < 1) {
-    return res.status(400).json({ error: 'A listing and a whole quantity of at least 1 are required.' })
-  }
 
   const listing = await Listing.findById(listingId)
 
